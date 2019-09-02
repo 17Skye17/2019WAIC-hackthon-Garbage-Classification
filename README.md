@@ -40,6 +40,12 @@
    **only one** category.
    
 ## 3. Method
+  + **Problem Analysis**
+
+  Before doing anything, I analyzed this problem and concluded 2 important rules:
+  
+  **1. Level-2 label is more important than level-1 label**: Since a `mapping_list.txt` is provided, we can always get the right level-1 label 
+
   + **Classifier Design**
   
   I treat this problem as a **multi-class image classification** problem, each image has two classes so the multi-hot label 
