@@ -80,6 +80,13 @@
    Inference strategy including label mapping is very important as aforementioned. I came up with three kinds of inference strategies during competition:
    
    **1. Naïve Inference**
-   ```shell
    
-   ```shell
+  ```shell
+    with torch.no_grad():
+            batch_size = outputs.size(0)
+            valid_indices = [0,1,2,3]
+            valid_pred = torch.zeros(outputs.size())
+            for i in range(batch_size):
+                valid_pred[i][valid_indices] = outputs[i][valid_indices].cpu().float()
+            _, pred_indices = valid_pred.topk(1,1,True,True)
+  ```shell
