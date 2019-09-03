@@ -90,9 +90,34 @@
             _, pred_indices = valid_pred.topk(1,1,True,True)
 
    **2. Hard Mapping**
-   
-   
+    
+    with torch.no_grad():
+            batch_size = outputs.size(0)
+            _, pred = outputs.topk(topk, 1, True, True)
+            for j in range(batch_size):
+                hash_table = np.zeros([4])
+                single_pred = pred[j]
+                for i in range(len(single_pred)):
+                    if single_pred[i].item() not in [0,1,2,3]:
+                        hash_table[self.label_map[str(single_pred[i].item())]] += 1
+                    else:
+                        hash_table[single_pred[i].item()] += 1
+
+                index = np.argmax(hash_table)
+
+   Take the top k predictions as candidate perdictions, then if level-1 label is in top k predictions (denoted as `P_valid`), take `argmax(P_valid)`; if all top k predictions are level-2 label, then mapping level-2 label to level-1 label and vote for final prediction. (Maybe taking top 1 mapped level-2 label is a better choice.)
    
    **3. Soft Mapping**
    
-   Experimental results show that hard mapping result in clear performance drop, this is because that 
+   Experimental results show that hard mapping result in clear performance drop, this is because that voting is not suitable for the classifier. (`for example, a prediction vector [0.8,0.5,0.5,0.5,0.5], the correct answer is 0, however when applying voting, the answer is not 0.`)
+   
+   A better design for mapping level-2 label to level-1 label is letting the mapping process to be learnt by model. For example, we can use two classifiers: level-1 classifier and level-2 classifier, the predictions from them are level-1 predictions (4-D vector) and level-2 predictions (399-D vector) respectively. Then we can use linear transformation to map a 399-D vector to a 4-D vector and use `torch.mm(mapped_vector, level-1 predictions)` to get final predictions, which is decided by both level-1 classifier and level-2 classifier.
+   
+** 4. Experiments **
+
+
+
+
+** Acknowlegements **
+
+Many thanks to WAIC committe, Tencent Webank and Synced (机器之心)
