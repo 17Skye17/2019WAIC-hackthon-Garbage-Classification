@@ -46,7 +46,9 @@
   
   **1. Level-2 label is more important than level-1 label**: Since a `mapping_list.txt` is provided, we can always get the right level-1 label by mapping level-2 to level-1.
   
-  **2. Label Mapping is important for inference**: Although we have `mapping_list.txt`,  here is a question when directly mapping level-2 label to level-1 label: *Level-1 label or mapped level-2 label, which one should be trusted during inferencing?*. It is obvious that setting proper confidence distribution for level-1 label and mapped level-2 label is rather important for inference.
+  **2. Label Mapping is important for inference**: Although we have `mapping_list.txt`,  here is a question when directly mapping level-2 label to level-1 label: *Level-1 label or mapped level-2 label, which one should be trusted during inferencing?* It is obvious that setting proper confidence distribution for level-1 label and mapped level-2 label is rather important for inference.
+
+  Based on the analysis, my strategy is consists of three parts: **classifier design**, **feature extractor design** and **inference strategy**.
 
   + **Classifier Design**
   
@@ -63,8 +65,21 @@
   
   **Baseline**: SENet154 (Squeeze-and-Excitation Network)
   
+   This is a strong baseline for ImageNet classification, I utilized this model and the weights pretrained on ImageNet, then fine-tuned all weights (with a modified last linear layer).
+  
   **Local Feature**: Non-local Block 2D (Gaussian Version)
+  
+   Non-local block has a very nice property that the input size and output size are always equal, so it is rather easy to insert the block to any off-the-shelf model. I inserted three non-local blocks (see `pretrainedmodels/models/senet.py` for details.)
   
   **Global Feature**: NetVLAD Encoding
   
+   NetVLAD is an effective feature aggregation method and is widely applied to image/video understanding challenges (see YouTube-8M Video Understanding Challenge.). I applied NetVLAD encoding to feature from the last average pooling layer of SENet154.
   
+  + **Inference Strategy**(\*)
+ 
+   Inference strategy including label mapping is very important as aforementioned. I came up with three kinds of inference strategies during competition:
+   
+   **1. Naïve Inference**
+   ```shell
+   
+   ```shell
