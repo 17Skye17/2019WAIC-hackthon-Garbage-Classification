@@ -42,16 +42,18 @@
 ## 3. Method
   + **Problem Analysis**
 
-  Before doing anything, I analyzed this problem and concluded 2 important rules:
+  Before doing anything, I analyzed this problem and made 2 conclusions:
   
-  **1. Level-2 label is more important than level-1 label**: Since a `mapping_list.txt` is provided, we can always get the right level-1 label 
+  **1. Level-2 label is more important than level-1 label**: Since a `mapping_list.txt` is provided, we can always get the right level-1 label by mapping level-2 to level-1.
+  
+  **2. Label Mapping is important for inference**: Although we have `mapping_list.txt`,  here is a question when directly mapping level-2 label to level-1 label: *Level-1 label or mapped level-2 label, which one should be trusted during inferencing?*. It is obvious that setting proper confidence distribution for level-1 label and mapped level-2 label is rather important for inference.
 
   + **Classifier Design**
   
   I treat this problem as a **multi-class image classification** problem, each image has two classes so the multi-hot label 
   vector is filled with 2 ones and 401 zeros. (403 labels in total: 4 level-1 label + 399 level-2 label)
   
-  So the classifier is simply a `Softmax` classifier with a fully connected layer, and loss is multi-class cross entropy loss.
+  So the classifier is simply a `Softmax` classifier with a fully connected layer, and loss is `multi-class cross entropy loss`.
   
   Another intesting design is utilizing two classifiers: one for level-1 label classification and the other for level-2. 
   However, after training my model with this kind of design, loss gets harder to convergence. (Maybe sharing the same feature 
@@ -64,3 +66,5 @@
   **Local Feature**: Non-local Block 2D (Gaussian Version)
   
   **Global Feature**: NetVLAD Encoding
+  
+  
