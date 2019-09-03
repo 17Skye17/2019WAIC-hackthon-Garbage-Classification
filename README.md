@@ -81,7 +81,7 @@
    
    **1. Naïve Inference**
    
-  ```shell
+ ```shell
     with torch.no_grad():
             batch_size = outputs.size(0)
             valid_indices = [0,1,2,3]
@@ -89,4 +89,4 @@
             for i in range(batch_size):
                 valid_pred[i][valid_indices] = outputs[i][valid_indices].cpu().float()
             _, pred_indices = valid_pred.topk(1,1,True,True)
-  ```shell
+ ```shell
