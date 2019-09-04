@@ -27,7 +27,7 @@ Team Member: Skye (yeah, I'm a solo player :ghost:)
    * [Training](#5.2-Training)
    * [Evaluation](#5.3-Evaluation)
    * [Inference](#5.4-Inference)
-* [Acknowlegements](#Acknowlegements)
+* [Acknowledgement](#Acknowledgement)
 * [References](#References)
 * [Contact](#Contact)
 
@@ -259,7 +259,7 @@ pip install torchvision==0.4.0 \    # torch 1.2.0 will be installed automaticall
   ```
   Then a file named `result.txt` will be generated for submission.
   
-## Acknowlegements 
+## Acknowledgement
 
 Thanks to WAIC committe（世界人工智能大会）, Tencent Webank（腾讯微众银行）and Synced (机器之心).
 
