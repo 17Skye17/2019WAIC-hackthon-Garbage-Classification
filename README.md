@@ -80,8 +80,8 @@ Team Member: Skye (yeah, I'm a solo player :ghost:)
   So the classifier is simply a `Softmax` classifier with a fully connected layer, and loss is `multi-class cross entropy loss`.
   
   Another intesting design is utilizing two classifiers: one for level-1 label classification and the other for level-2. 
-  However, after training my model with this kind of design, loss gets harder to convergence. (Maybe sharing the same feature 
-  extractor parameter weights for both classifiers is wrong.)
+  However, after training my model with this kind of design, loss gets harder to converge. (Maybe sharing the same feature 
+  extractor parameter weights for both classifiers is not brilliant.)
   
 ### 3.3 Feature Extractor Design
   
@@ -95,7 +95,7 @@ Team Member: Skye (yeah, I'm a solo player :ghost:)
   
   + **Global Feature**: NetVLAD Encoding
   
-   NetVLAD is an effective feature aggregation method and is widely applied to image/video understanding challenges (see YouTube-8M Video Understanding Challenge.). I applied NetVLAD encoding to feature from the last average pooling layer of SENet154.
+   NetVLAD is an effective feature aggregation method and is widely applied to image/video understanding challenges (see [YouTube-8M Video Understanding Challenge](https://github.com/17Skye17/2nd-YouTube8M)). I applied NetVLAD encoding to feature from the last average pooling layer of SENet154.
   
 ### 3.4 Inference Strategy\*
  
@@ -235,7 +235,7 @@ pip install torchvision==0.4.0 \    # torch 1.2.0 will be installed automaticall
   ```shell
   python train.py senet154 0 128
   ```
-  **Note**: For the first time, a scipt in `./pretrainedmodels` will automatically download a model dict file pretrained on ImageNet.
+  **Note**: For the first time, a script in `./pretrainedmodels` will automatically download a model dict file pretrained on ImageNet.
 
 ### 5.3 Evaluation
   ```shell
