@@ -28,6 +28,7 @@ Team Member: Skye (yeah, I'm a solo player :ghost:)
    * [Evaluation](#5.3-Evaluation)
    * [Inference](#5.4-Inference)
 * [Acknowlegements](#Acknowlegements)
+* [References](#References)
 * [Contact](#Contact)
 
 ## 1 Intro
@@ -261,6 +262,14 @@ pip install torchvision==0.4.0 \    # torch 1.2.0 will be installed automaticall
 ## Acknowlegements 
 
 Thanks to WAIC committe（世界人工智能大会）, Tencent Webank（腾讯微众银行）and Synced (机器之心).
+
+## References
+
+[1] Wang, Xiaolong, et al. "Non-local neural networks." Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2018.
+
+[2] Hu, Jie, Li Shen, and Gang Sun. "Squeeze-and-excitation networks." Proceedings of the IEEE conference on computer vision and pattern recognition. 2018.
+
+[3] Arandjelovic, Relja, et al. "NetVLAD: CNN architecture for weakly supervised place recognition." Proceedings of the IEEE conference on computer vision and pattern recognition. 2016.
 
 ## Contact
 
