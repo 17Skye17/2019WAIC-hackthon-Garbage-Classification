@@ -8,9 +8,25 @@
 
 **Team Member: Skye (yeah, I'm a solo player)**
 
+****
+## CONTENTS
+* [Introduction](#1-Intro)
+* [Rules](#2-Rules)
+* [Method](#3-Method)
+   * [Problem Analysis](#Problem-Analysis)
+   * [Classifier Design](#Classifier-Design)
+   * [Feature Extractor Design](#Feature Extractor Design)
+   * [Inference Strategy](#Inference Strategy)
+* [Experiments](#Experiments)
+* [Usage](#Usage)
+   * [File Description](#File Description)
+   * [](#)
+* [Acknowlegements](#Acknowlegements)
+* [Contact](#Contact)
+
 ## 1 Intro
    This repo is the solution of team **Skye**, the hackthon lasts for **36** hours, all contestants 
-   need to develop a model for garbage image classification within the specified time. See [slides]().
+   need to develop a model for garbage image classification within the specified time. See [slides](https://docs.qq.com/slide/DTlJXUmFsdFFKdVht).
    
    Since July 1, 2019, Shanghai has taken the lead in implementing the 
    four-category policy of garbage (all garbage are classified into 4 categoires: harmful/recyclable/other/kitch). 
@@ -44,9 +60,13 @@
 
   Before doing anything, I analyzed this problem and made 2 conclusions:
   
-  **1. Level-2 label is more important than level-1 label**: Since a `mapping_list.txt` is provided, we can always get the right level-1 label by mapping level-2 to level-1.
+  + **Level-2 label is more important than level-1 label**:
   
-  **2. Label Mapping is important for inference**: Although we have `mapping_list.txt`,  here is a question when directly mapping level-2 label to level-1 label: *Level-1 label or mapped level-2 label, which one should be trusted during inferencing?* It is obvious that setting proper confidence distribution for level-1 label and mapped level-2 label is rather important for inference.
+  Since a `mapping_list.txt` is provided, we can always get the right level-1 label by mapping level-2 to level-1.
+  
+  + **Label Mapping is important for inference**: 
+  
+  Although we have `mapping_list.txt`,  here is a question when directly mapping level-2 label to level-1 label: *Level-1 label or mapped level-2 label, which one should be trusted during inferencing?* It is obvious that setting proper confidence distribution for level-1 label and mapped level-2 label is rather important for inference.
 
   Based on the analysis, my strategy is consists of three parts: **classifier design**, **feature extractor design** and **inference strategy**.
 
@@ -63,19 +83,19 @@
   
 ### 3.3 Feature Extractor Design
   
-  **Baseline**: SENet154 (Squeeze-and-Excitation Network)
+  + **Baseline**: SENet154 (Squeeze-and-Excitation Network)
   
    This is a strong baseline for ImageNet classification, I utilized this model and the weights pretrained on ImageNet, then fine-tuned all weights (with a modified last linear layer).
   
-  **Local Feature**: Non-local Block 2D (Gaussian Version)
+  + **Local Feature**: Non-local Block 2D (Gaussian Version)
   
    Non-local block has a very nice property that the input size and output size are always equal, so it is rather easy to insert the block to any off-the-shelf model. I inserted three non-local blocks (see `pretrainedmodels/models/senet.py` for details.)
   
-  **Global Feature**: NetVLAD Encoding
+  + **Global Feature**: NetVLAD Encoding
   
    NetVLAD is an effective feature aggregation method and is widely applied to image/video understanding challenges (see YouTube-8M Video Understanding Challenge.). I applied NetVLAD encoding to feature from the last average pooling layer of SENet154.
   
-### 3.4 Inference Strategy(\*)
+### 3.4 Inference Strategy\*
  
    Inference strategy including label mapping is very important as aforementioned. I came up with three kinds of inference strategies during competition:
    
@@ -141,10 +161,17 @@ Non-local SENet + NetVLAD Encoding | 0.807
 
 An interesting observation: testing results are much lower than validation results, that is because the training and validation data are crawled from web while the testing data is captured in our daily life which is the **real garbage**!
 
+## Usage
+
+### File Description
+
+### 
+
+
 ## Acknowlegements 
 
-Many thanks to WAIC committe（世界人工智能大会）, Tencent Webank（腾讯微众银行） and Synced (机器之心).
+Many thanks to WAIC committe（世界人工智能大会）, Tencent Webank（腾讯微众银行）and Synced (机器之心).
 
 ## Contact
 
-If you are interested in my project, for sharing solutions or discussing questions, please sent me an e-mail: [skyezx2018@gmail.com](skyezx2018@gmail.com)
+If you are interested in my project, for sharing solutions or discussing questions, please send me an e-mail: [skyezx2018@gmail.com](skyezx2018@gmail.com)
