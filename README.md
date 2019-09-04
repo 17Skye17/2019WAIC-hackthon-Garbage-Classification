@@ -19,6 +19,7 @@ Team Member: Skye (yeah, I'm a solo player :ghost:)
    * [Inference Strategy](#3.4-Inference-Strategy)
 * [Experiments](#4-Experiments)
 * [Usage](#5-Usage)
+   * [Requirments](#5.0-Requirments)
    * [File Description](#5.1-File-Description)
    * [Training](#5.2-Training)
    * [Evaluation](#5.3-Evaluation)
@@ -165,7 +166,7 @@ An interesting observation: testing results are much lower than validation resul
 
 ## 5 Usage
 
-### 5.0 Requirments
+### 5.0 Requirements
 ```shell
 pip install torchvision==0.4.0 \    # torch 1.2.0 will be installed automatically
             numpy==1.15.4 \
