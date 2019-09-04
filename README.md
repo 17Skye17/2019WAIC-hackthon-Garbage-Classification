@@ -35,7 +35,7 @@ Team Member: Skye (yeah, I'm a solo player :ghost:)
    need to develop a model for garbage image classification within the specified time. See [slides](https://docs.qq.com/slide/DTlJXUmFsdFFKdVht).
    
    Since July 1, 2019, Shanghai has taken the lead in implementing the 
-   four-category policy of garbage (all garbage are classified into 4 categoires: harmful/recyclable/other/kitch). 
+   four-category policy of garbage (all garbage are classified into 4 categoires: harmful/recyclable/other/kitchen). 
    Since my roommates and me are firm practitioners of this policy, I'm very interested in this challenge and 
    participated in alone (they are better at hardware than programming).
   
