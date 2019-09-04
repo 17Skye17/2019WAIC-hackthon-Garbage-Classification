@@ -142,7 +142,7 @@ Team Member: Skye (yeah, I'm a solo player :ghost:)
 
 Training dataset: 50%
 
-Evalution dataset: 50%
+Evaluation dataset: 50%
 
 For inference: 95% training data
 
