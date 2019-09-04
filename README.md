@@ -1,4 +1,4 @@
-# WAIC2019 hackthon (Webank Garbage Classification Track)
+# WAIC2019 hackthon (Webank Garbage Classification)
 
 ## 1st Place Solution to WAIC2019 hackthon Garbage Classification Challenge
 
