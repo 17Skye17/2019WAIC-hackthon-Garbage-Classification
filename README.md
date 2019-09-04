@@ -89,6 +89,8 @@
                 valid_pred[i][valid_indices] = outputs[i][valid_indices].cpu().float()
             _, pred_indices = valid_pred.topk(1,1,True,True)
 
+   I utilized Naïve Inference for final submission, the Naïve Inference only takes indices `[0,1,2,3]` into account, the corresponding predictions are `valid_pred`, then `argmax(valid_pred)` is chosen as final prediction.
+
    **2. Hard Mapping**
     
     with torch.no_grad():
@@ -115,9 +117,33 @@
    
 ** 4. Experiments **
 
+Training dataset: 50%
 
+Evalution dataset: 50%
+
+For inference: 95% training data
+
+**Validation Results**
+
+Model| Acc@1 | Acc@5 | Naïve Rank@1
+-|-|-|-
+SENet Finetune|83.207|96.755|86.325
+Non-local SENet|84.677|96.875|87.601
+Non-local SENet + NetVLAD Encoding|85.360|96.889|87.730
+
+
+**Inference Results**
+
+Model | Naïve Rank@1
+-|-
+SENet Finetune | 0.797
+Non-local SENet + NetVLAD Encoding | 0.807
 
 
 ** Acknowlegements **
 
-Many thanks to WAIC committe, Tencent Webank and Synced (机器之心)
+Many thanks to WAIC committe（世界人工智能大会）, Tencent Webank（腾讯微众银行） and Synced (机器之心).
+
+** Contact **
+
+If you are interested in my project, for sharing solutions or discussing questions, please sent me a e-mail: [skyezx2018@gmail.com]
