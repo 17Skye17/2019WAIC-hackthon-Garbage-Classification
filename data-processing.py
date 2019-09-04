@@ -102,4 +102,5 @@ def get_image_dict():
     lf.close()
 
 if __name__ == '__main__':
+    get_image_list() 
     get_image_dict()
