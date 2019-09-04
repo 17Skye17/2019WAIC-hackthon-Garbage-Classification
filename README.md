@@ -8,6 +8,9 @@ Team: Skye
 
 Team Member: Skye (yeah, I'm a solo player :ghost:)
 
+<img src="https://github.com/17Skye17/2019WAIC-hackthon-Garbage-Classification/blob/master/WAIC.jpg" width="1000" alt="WAIC">
+<img src="https://github.com/17Skye17/2019WAIC-hackthon-Garbage-Classification/blob/master/Skye.jpeg" width="1000" alt="Skye">
+
 ****
 ## CONTENTS
 * [Introduction](#1-Intro)
