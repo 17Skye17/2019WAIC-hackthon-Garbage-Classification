@@ -83,14 +83,14 @@ class record():
         
         print (self.map_path) 
         
-        self.lf = open(self.map_path,'r',encoding='utf-8')
+        self.lf = open(self.map_path,'r',encoding='cp936')
         self.topk = topk
         self.label_map = np.empty(num_classes,dtype='object')
         for line in self.lf.readlines():
             # line is string
             item = line.strip().split(',')
             # save Chinese characters as bytes
-            self.label_map[int(item[2])] = item[0].encode('utf-8')
+            self.label_map[int(item[2])] = item[0].encode('cp936')
 
     def write(self, ids, outputs, labels):
         with torch.no_grad():
@@ -106,10 +106,10 @@ class record():
                 pred = self.label_map[pred_indices[i].tolist()]
                 line = ids[i] + ' '
                 for j in range(len(gt)):
-                    line += str(gt[j],encoding='utf-8') + '/'
+                    line += str(gt[j],encoding='cp936') + '/'
                 line += ' '
                 for j in range(len(pred)):
-                    line += str(pred[j],encoding='utf-8') + '/'
+                    line += str(pred[j],encoding='cp936') + '/'
                 self.f.write(line+'\n')
                 #line = ids[i] + ' ' + str(gt) + ' ' + str(pred) +'\n'
                 #self.f.write(line)
@@ -124,14 +124,14 @@ class rank_record():
         
         print (self.map_path) 
         
-        self.lf = open(self.map_path,'r',encoding='utf-8')
+        self.lf = open(self.map_path,'r',encoding='cp936')
         self.topk = topk
         self.label_map = np.empty(num_classes,dtype='object')
         for line in self.lf.readlines():
             # line is string
             item = line.strip().split(',')
             # save Chinese characters as bytes
-            self.label_map[int(item[2])] = item[0].encode('utf-8')
+            self.label_map[int(item[2])] = item[0].encode('cp936')
 
     def write(self, ids, outputs, labels):
         with torch.no_grad():
@@ -152,10 +152,10 @@ class rank_record():
                 pred = self.label_map[pred_indices[i].tolist()]
                 line = ids[i] + ' '
                 for j in range(len(gt)):
-                    line += str(gt[j],encoding='utf-8') + '/'
+                    line += str(gt[j],encoding='cp936') + '/'
                 line += ' '
                 for j in range(len(pred)):
-                    line += str(pred[j],encoding='utf-8') + '/'
+                    line += str(pred[j],encoding='cp936') + '/'
                 self.f.write(line+'\n')
                 #line = ids[i] + ' ' + str(gt) + ' ' + str(pred) +'\n'
                 #self.f.write(line)
