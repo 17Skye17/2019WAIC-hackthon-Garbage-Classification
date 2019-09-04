@@ -8,16 +8,16 @@
 
 **Team Member: Skye (yeah, I'm a solo player)**
 
-## 1. Intro
+## 1 Intro
    This repo is the solution of team **Skye**, the hackthon lasts for **36** hours, all contestants 
-   need to develop a model for garbage image classification within the specified time.
+   need to develop a model for garbage image classification within the specified time. See [slides]().
    
    Since July 1, 2019, Shanghai has taken the lead in implementing the 
    four-category policy of garbage (all garbage are classified into 4 categoires: harmful/recyclable/other/kitch). 
    Since my roommates and me are firm practitioners of this policy, I'm very interested in this challenge and 
    participated in alone (they are better at hardware than programming).
   
-## 2. Rules
+## 2 Rules
    + **Datasets**
    
    Training set: ~20,000 images
@@ -39,8 +39,8 @@
    The final accuracy only computed on 4 coarse categories (level-2 label is not required for inference), each sample has 
    **only one** category.
    
-## 3. Method
-  + **Problem Analysis**
+## 3 Method
+### 3.1 Problem Analysis
 
   Before doing anything, I analyzed this problem and made 2 conclusions:
   
@@ -50,7 +50,7 @@
 
   Based on the analysis, my strategy is consists of three parts: **classifier design**, **feature extractor design** and **inference strategy**.
 
-  + **Classifier Design**
+### 3.2 Classifier Design
   
   I treat this problem as a **multi-class image classification** problem, each image has two classes so the multi-hot label 
   vector is filled with 2 ones and 401 zeros. (403 labels in total: 4 level-1 label + 399 level-2 label)
@@ -61,7 +61,7 @@
   However, after training my model with this kind of design, loss gets harder to convergence. (Maybe sharing the same feature 
   extractor parameter weights for both classifiers is wrong.)
   
-  + **Feature Extractor Design**
+### 3.3 Feature Extractor Design
   
   **Baseline**: SENet154 (Squeeze-and-Excitation Network)
   
@@ -75,11 +75,11 @@
   
    NetVLAD is an effective feature aggregation method and is widely applied to image/video understanding challenges (see YouTube-8M Video Understanding Challenge.). I applied NetVLAD encoding to feature from the last average pooling layer of SENet154.
   
-  + **Inference Strategy**(\*)
+### 3.4 Inference Strategy(\*)
  
    Inference strategy including label mapping is very important as aforementioned. I came up with three kinds of inference strategies during competition:
    
-   **1. Naïve Inference**
+   + **Naïve Inference**
    
     with torch.no_grad():
             batch_size = outputs.size(0)
@@ -91,7 +91,7 @@
 
    I utilized Naïve Inference for final submission, the Naïve Inference only takes indices `[0,1,2,3]` into account, the corresponding predictions are `valid_pred`, then `argmax(valid_pred)` is chosen as final prediction.
 
-   **2. Hard Mapping**
+   + **Hard Mapping**
     
     with torch.no_grad():
             batch_size = outputs.size(0)
@@ -109,13 +109,13 @@
 
    Take the top k predictions as candidate perdictions, then if level-1 label is in top k predictions (denoted as `P_valid`), take `argmax(P_valid)`; if all top k predictions are level-2 label, then mapping level-2 label to level-1 label and vote for final prediction. (Maybe taking top 1 mapped level-2 label is a better choice.)
    
-   **3. Soft Mapping**
+   + **Soft Mapping**
    
    Experimental results show that hard mapping result in clear performance drop, this is because that voting is not suitable for the classifier. (`for example, a prediction vector [0.8,0.5,0.5,0.5,0.5], the correct answer is 0, however when applying voting, the answer is not 0.`)
    
    A better design for mapping level-2 label to level-1 label is letting the mapping process to be learnt by model. For example, we can use two classifiers: level-1 classifier and level-2 classifier, the predictions from them are level-1 predictions (4-D vector) and level-2 predictions (399-D vector) respectively. Then we can use linear transformation to map a 399-D vector to a 4-D vector and use `torch.mm(mapped_vector, level-1 predictions)` to get final predictions, which is decided by both level-1 classifier and level-2 classifier.
    
-** 4. Experiments **
+## 4 Experiments
 
 Training dataset: 50%
 
@@ -139,11 +139,12 @@ Model | Naïve Rank@1
 SENet Finetune | 0.797
 Non-local SENet + NetVLAD Encoding | 0.807
 
+An interesting observation: testing results are much lower than validation results, that is because the training and validation data are crawled from web while the testing data is captured in our daily life which is the **real garbage**!
 
-** Acknowlegements **
+## Acknowlegements 
 
 Many thanks to WAIC committe（世界人工智能大会）, Tencent Webank（腾讯微众银行） and Synced (机器之心).
 
-** Contact **
+## Contact
 
-If you are interested in my project, for sharing solutions or discussing questions, please sent me a e-mail: [skyezx2018@gmail.com]
+If you are interested in my project, for sharing solutions or discussing questions, please sent me an e-mail: [skyezx2018@gmail.com](skyezx2018@gmail.com)
