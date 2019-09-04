@@ -10,13 +10,13 @@ import torch.optim as optim
 from torchvision import models
 from DataReader import ImageDataset,TransformImage
 from PIL import ImageFile
-from utils import data_utils
+from utils import train_utils
 from datetime import datetime
 from sync_batchnorm import convert_model
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-if len(sys.argv)!=5:
-    print ("Usage: python extract.py model_name image_list save_file gpu_id")
+if len(sys.argv)!=4:
+    print ("Usage: python train.py model_name gpu_id batch_size")
 
 model_name = sys.argv[1]
 gpu_id = sys.argv[2]
@@ -26,8 +26,8 @@ batch_size = int(sys.argv[3])
 num_classes = 403
 num_epochs = 30
 feature_extract = False
-train_list =  'train.lst'
-val_list = 'test.lst'
+train_list =  './lists/train.lst'
+val_list = './lists/test.lst'
 label_map = './modified.lst'
 save_root = './log'
 

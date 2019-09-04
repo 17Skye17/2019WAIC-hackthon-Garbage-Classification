@@ -63,34 +63,32 @@ class record():
         
         print (self.map_path) 
         
-        #self.lf = open(self.map_path,'r',encoding='cp936')
-        self.lf = open("../modified.lst",'r')
+        self.lf = open(self.map_path,'r',encoding='cp936')
         self.topk = topk
-        
-        #self.label_map = np.empty(num_classes,dtype='object')
-        self._dict = {}
+        self.label_map = np.empty(num_classes,dtype='object')
         for line in self.lf.readlines():
-            item = line.strip().split(' ')
-            self._dict[item[0]] = item[2].split(',')
-        #for line in self.lf.readlines():
             # line is string
-        #    item = line.strip().split(',')
+            item = line.strip().split(',')
             # save Chinese characters as bytes
-        #    self.label_map[int(item[2])] = item[0].encode('cp936')
+            self.label_map[int(item[2])] = item[0].encode('cp936')
 
-    def write(self, ids, outputs):
+    def write(self, ids, outputs, labels):
         batch_size = outputs.size(0)
+        np_labels = labels.cpu().numpy()
         _, pred_indices = outputs.topk(self.topk,1,True,True)
         
         pred_indices = pred_indices.cpu().numpy()
         for i in range(batch_size):
-            pred = pred_indices[i].tolist()
+            gt_indices = np.nonzero(np_labels[i])[0]
+            #print (self.label_map[[1,2,3]])
+            gt = self.label_map[gt_indices.tolist()]
+            pred = self.label_map[pred_indices[i].tolist()]
             line = ids[i] + ' '
+            for j in range(len(gt)):
+                line += str(gt[j],encoding='utf-8') + '/'
+            line += ' '
             for j in range(len(pred)):
-                line += str(pred[j]) + ','
-            line = line + ' '
-            for l in self._dict[ids[i].split('/')[-1].split('.')[0]]:
-                line += l + ','
+                line += str(pred[j],encoding='utf-8') + '/'
             self.f.write(line+'\n')
             #line = ids[i] + ' ' + str(gt) + ' ' + str(pred) +'\n'
             #self.f.write(line)
@@ -105,34 +103,14 @@ class rank_record():
 
         self.lf = open(self.map_path,'r',encoding='cp936')
         self.topk = topk
-        #self.label_map = np.empty(num_classes,dtype='object')
-        self.label_map = {}
+        self.label_map = np.empty(num_classes,dtype='object')
         for line in self.lf.readlines():
             # line is string
             item = line.strip().split(',')
-            self.label_map[item[2]] = int(item[1])
-            #self.label_map[int(item[2])] = item[0].encode('cp936')
+            self.label_map[int(item[2])] = item[0].encode('cp936')
+            #self.label_map[int(item[2])] = item[0]
     
-    def write(self, ids, outputs, topk=5):
-        """
-        if topk has 
-        """
-        
-        with torch.no_grad():
-            batch_size = outputs.size(0)
-            _, pred = outputs.topk(topk, 1, True, True)
-            for j in range(batch_size):
-                hash_table = np.zeros([4])
-                single_pred = pred[j]
-                for i in range(len(single_pred)):
-                    if single_pred[i].item() not in [0,1,2,3]:
-                        hash_table[self.label_map[str(single_pred[i].item())]] += 1
-                    else:
-                        hash_table[single_pred[i].item()] += 1
-
-                index = np.argmax(hash_table)
-
-    def write1(self, ids, outputs):
+    def write(self, ids, outputs):
         with torch.no_grad():
             batch_size = outputs.size(0)
             #_, pred_indices = outputs.topk(self.topk,1,True,True)
@@ -162,8 +140,8 @@ def inference_model(num_classes, model_name, label_map, model, dataloaders, devi
     # Each epoch has a training and validation phase
     print("Enter Inference Mode...\n")
     model.eval()   # Set model to evaluate mode
-    #writer = rank_record(model_name,label_map,num_classes,topk=5)
-    writer = record(model_name, label_map, num_classes, topk=5)
+    writer = rank_record(model_name,label_map,num_classes,topk=5)
+    
     # Iterate over data.
     count = 0
     for ids, inputs in dataloaders['inference']:

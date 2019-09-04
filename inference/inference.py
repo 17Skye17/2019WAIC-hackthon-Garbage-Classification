@@ -18,9 +18,8 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 model_name = 'senet154' 
 batch_size =16
-model_path = 'log/Epoch_14'
-num_classes = 399
-feature_extract = True
+model_path = 'log/Epoch_3'
+num_classes = 403
 test_list = sys.argv[1]
 label_map = './mapping_list.txt'
 
@@ -28,15 +27,15 @@ model = pretrainedmodels.__dict__[model_name](num_classes=1000, pretrained='imag
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-def initialize_model(model, feature_extract):
+def initialize_model(model):
     num_ftrs = model.last_linear.in_features
     model.last_linear = nn.Linear(num_ftrs,num_classes)
     return model
 
 image_loader_dict = inference_utils.get_image_loader(test_list,  model,  num_classes, batch_size)
 
-model_ft = initialize_model(model, feature_extract)
-
+model_ft = initialize_model(model)
+model_ft = nn.DataParallel(model_ft)
 model_ft = model_ft.to(device)
 
 model_ft.load_state_dict(torch.load(model_path))

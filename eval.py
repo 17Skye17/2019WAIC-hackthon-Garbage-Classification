@@ -22,12 +22,12 @@ model_name = sys.argv[1]
 gpu_id = sys.argv[2]
 batch_size = int(sys.argv[3])
 model_path = sys.argv[4]
-num_classes = 403
+num_classes = 399
 feature_extract = False
 train_list =  './train.lst'
 val_list = './test.lst'
-label_num = './modified.lst'
-label_map = './mapping_list.txt'
+label_map = './success.lst'
+label_num = './mapping_modified.txt'
 save_root = './log'
 
 os.environ['CUDA_VISIBLE_DEVICES'] = gpu_id

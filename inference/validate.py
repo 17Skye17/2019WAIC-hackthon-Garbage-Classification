@@ -4,7 +4,7 @@ lines = f.readlines()
 
 def get_dict():
     #f = open("success.lst",'r',encoding='cp936')
-    f = open("success.lst",'r')
+    f = open("modified.lst",'r')
     _dict = {}
     for line in f.readlines():
         item = line.strip().split(' ')
