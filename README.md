@@ -134,9 +134,9 @@ Team Member: Skye (yeah, I'm a solo player :ghost:)
    
    + **Soft Mapping**
    
-   Experimental results show that hard mapping result in clear performance drop, this is because that voting is not suitable for the classifier. (`for example, a prediction vector [0.8,0.5,0.5,0.5,0.5], the correct answer is 0, however when applying voting, the answer is not 0.`)
+   Experimental results show that hard mapping results in clear performance drop, this is because that voting is not suitable for the classifier. (`for example, a prediction vector [0.8,0.5,0.5,0.5,0.5], the correct answer is 0, however when applying voting, the answer is not 0.`)
    
-   A better design for mapping level-2 label to level-1 label is letting the mapping process to be learnt by model. For example, we can use two classifiers: level-1 classifier and level-2 classifier, the predictions from them are level-1 predictions (4-D vector) and level-2 predictions (399-D vector) respectively. Then we can use linear transformation to map a 399-D vector to a 4-D vector and use `torch.mm(mapped_vector, level-1 predictions)` to get final predictions, which is decided by both level-1 classifier and level-2 classifier.
+   A better design for mapping level-2 label to level-1 label is letting the mapping process to be learnt by model. For example, we can use two classifiers: level-1 classifier and level-2 classifier, the predictions from them are level-1 predictions (4-D vector) and level-2 predictions (399-D vector) respectively. Then we can use linear transformation to map a 399-D vector to a 4-D vector and use `torch.mm(mapped_vector, level-1 predictions)` to get final prediction, thus the final prediction is decided by both level-1 classifier and level-2 classifier.
    
 ## 4 Experiments
 
