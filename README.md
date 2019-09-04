@@ -13,12 +13,12 @@
 * [Introduction](#1-Intro)
 * [Rules](#2-Rules)
 * [Method](#3-Method)
-   * [Problem Analysis](#Problem-Analysis)
-   * [Classifier Design](#Classifier-Design)
-   * [Feature Extractor Design](#Feature-Extractor-Design)
-   * [Inference Strategy](#Inference-Strategy)
-* [Experiments](#Experiments)
-* [Usage](#Usage)
+   * [Problem Analysis](#3.1-Problem-Analysis)
+   * [Classifier Design](#3.2-Classifier-Design)
+   * [Feature Extractor Design](#3.3-Feature-Extractor-Design)
+   * [Inference Strategy](#3.4-Inference-Strategy)
+* [Experiments](#4-Experiments)
+* [Usage](#5-Usage)
    * [File Description](#File-Description)
    * [Training](#Training)
    * [Evaluation](#Evaluation)
@@ -163,11 +163,63 @@ Non-local SENet + NetVLAD Encoding | 0.807
 
 An interesting observation: testing results are much lower than validation results, that is because the training and validation data are crawled from web while the testing data is captured in our daily life which is the **real garbage**!
 
-## Usage
+## 5 Usage
 
-### File Description
+### 5.1 File Description
 
-### 
+```shell
+2019WAIC-hackthon-Garbage-Classification
+|-- data-processing.py                       # crawl, rename and validate data
+|-- DataReader.py                            # ImageLoader, ImageTransformation
+|-- eval.py                                  # evaluation code
+|-- inference                                # files for final submission
+|   |-- DataReader.py                             # ImageLoader, ImageTransformation
+|   |-- inference.py                              # inference python code
+|   |-- inference.sh                              # inference shell code
+|   |-- log                                       # directory to store model checkpoints
+|   |-- mapping_list.txt                          # modified level-1 and level-2 label mapping list
+|   |-- modified.lst                              # modified training data labels after modifying line:0-3 in mapping_list.txt
+|   |-- pretrainedmodels                          # pretrained image classification models
+|   |-- result.txt                                # submission file
+|   |-- test.txt                                  # data list for inference
+|   |-- utils                                     # inference utils
+|   `-- validate.py                               # validate result.txt(not neccessary)
+|-- lists                                    # directory stors train and validation data
+|   |-- back                                 # for offline test (50% train, 50% test)
+|   |-- mklist.py                            # python script to create test.lst and train.lst (95% train, 5% test)
+|   |-- test.lst                             # validation data(see test data in ./inference)
+|   `-- train.lst                            # train data
+|-- log
+|   `-- senet154-FT-08301618_plain           # senet154 checkpoints
+|-- mapping_list.txt                         # modified level-1 and level-2 label mapping list
+|-- modified.lst                             # modified training data labels after modifying line:0-3 in mapping_list.txt
+|-- pretrainedmodels                         # pretrained image classification models
+|   |-- ckpts
+|   |-- datasets
+|   |-- __init__.py
+|   |-- models                               # off-the-shelf models (including senet154)
+|   |-- utils.py
+|   `-- version.py
+|-- README.md
+|-- success.lst                              # valide downloaded images, transformed into .jpeg format
+|-- sync_batchnorm                           # utils for torch.nn.DataParallel(), with sync_batchnorm we gain better results
+|   |-- batchnorm.py
+|   |-- batchnorm_reimpl.py
+|   |-- comm.py
+|   |-- __init__.py
+|   |-- __pycache__
+|   |-- replicate.py
+|   `-- unittest.py
+|-- train.py                                 # train code
+|-- train-twoclassifier.py                   # train two classifiers code (not work)
+`-- utils                                    # utils for train and evaluation
+    |-- eval_utils.py
+    |-- __init__.py
+    `-- train_utils.py
+
+```
+
+### 5.2 
 
 
 ## Acknowlegements 
