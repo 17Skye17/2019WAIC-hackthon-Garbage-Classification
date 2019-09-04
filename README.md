@@ -165,6 +165,13 @@ An interesting observation: testing results are much lower than validation resul
 
 ## 5 Usage
 
+### 5.0 Requirments
+```shell
+pip install torchvision==0.4.0 \    # torch 1.2.0 will be installed automatically
+            numpy==1.15.4 \
+            pillow==5.4.1 \
+```
+
 ### 5.1 File Description
 
 ```shell
@@ -228,7 +235,7 @@ An interesting observation: testing results are much lower than validation resul
   ```shell
   python train.py senet154 0 128
   ```
-  Note that for the first time, a scipt in `./pretrainedmodels` will automatically download a model dict file pretrained on ImageNet.
+  **Note**: For the first time, a scipt in `./pretrainedmodels` will automatically download a model dict file pretrained on ImageNet.
 
 ### 5.3 Evaluation
   ```shell
@@ -238,10 +245,15 @@ An interesting observation: testing results are much lower than validation resul
   ```shell
   python eval.py senet154 0 128 ./log/senet154-FT-08301618_plain/Epoch_4
   ```
-
+  Then a file named `[model_name].lst` will be generated, which including all data ids, `topk` ground truth and `topk` predictions.
+  
 ### 5.4 Inference
-
-
+  ```shell
+  cd inference
+  python inference.py test.txt
+  ```
+  Then a file named `result.txt` will be generated for submission.
+  
 ## Acknowlegements 
 
 Thanks to WAIC committe（世界人工智能大会）, Tencent Webank（腾讯微众银行）and Synced (机器之心).
