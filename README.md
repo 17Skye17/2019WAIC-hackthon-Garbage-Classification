@@ -2,11 +2,11 @@
 
 ## 1st Place Solution to WAIC2019 hackthon Garbage Classification Challenge
 
-**Time: August 29-31, 2019, Shanghai, China**
+Time: August 29-31, 2019, Shanghai, China
 
-**Team: Skye**
+Team: Skye
 
-**Team Member: Skye (yeah, I'm a solo player)**
+Team Member: Skye (yeah, I'm a solo player :ghost:)
 
 ****
 ## CONTENTS
@@ -19,10 +19,10 @@
    * [Inference Strategy](#3.4-Inference-Strategy)
 * [Experiments](#4-Experiments)
 * [Usage](#5-Usage)
-   * [File Description](#File-Description)
-   * [Training](#Training)
-   * [Evaluation](#Evaluation)
-   * [Inference](#Inference)
+   * [File Description](#5.1-File-Description)
+   * [Training](#5.2-Training)
+   * [Evaluation](#5.3-Evaluation)
+   * [Inference](#5.4-Inference)
 * [Acknowlegements](#Acknowlegements)
 * [Contact](#Contact)
 
@@ -219,13 +219,33 @@ An interesting observation: testing results are much lower than validation resul
 
 ```
 
-### 5.2 
+### 5.2 Training
+
+  ```shell
+  python train.py model_name gpu_id batch_size
+  ```
+  example:
+  ```shell
+  python train.py senet154 0 128
+  ```
+  Note that for the first time, a scipt in `./pretrainedmodels` will automatically download a model dict file pretrained on ImageNet.
+
+### 5.3 Evaluation
+  ```shell
+  python eval.py model_name gpu_id batch_size model_path
+  ```
+  example:
+  ```shell
+  python eval.py senet154 0 128 ./log/senet154-FT-08301618_plain/Epoch_4
+  ```
+
+### 5.4 Inference
 
 
 ## Acknowlegements 
 
-Many thanks to WAIC committe（世界人工智能大会）, Tencent Webank（腾讯微众银行）and Synced (机器之心).
+Thanks to WAIC committe（世界人工智能大会）, Tencent Webank（腾讯微众银行）and Synced (机器之心).
 
 ## Contact
 
-If you are interested in my project, for sharing solutions or discussing questions, please send me an e-mail: [skyezx2018@gmail.com](skyezx2018@gmail.com)
+If you are interested in this project, for sharing solutions or discussing questions, please send me an e-mail: [skyezx2018@gmail.com](skyezx2018@gmail.com). PR & issues are welcome.
